@@ -35,21 +35,41 @@ Space.prototype.isSame = function(space) {
 function Player(name, token) {
   this.name = name;
   this.token = token;
+  this.ai = false;
+}
+
+var aiTurn = function() {
+  if(playerTurn.ai) {
+    while(true) {
+      var x = Math.floor(Math.random() * 3);
+      var y = Math.floor(Math.random() * 3);
+      if(board[x][y].token==="") {
+        $("[name='" + x.toString() + "-" + y.toString() + "']").append("<img class='token' src='img/" + playerTurn.token + ".png' alt='Letter'>");
+        var message = playerTurn.name + " wins!";
+        if(playerTurn.placeToken(x, y)) {
+          if(isDraw) {
+            var message = "It's a draw!"
+            isDraw = false;
+          }
+          $("p#result").text(message);
+          $(".col-xs-4").empty();
+        }
+        return x.toString() + "-" + y.toString()
+        break;
+      }
+    }
+  } else {
+    return "";
+  }
 }
 
 var isDraw = false;
-
 Player.prototype.placeToken = function(x, y) {
   var gameOver = false;
   if(board[x][y].token==="") {
     turnNumber ++;
 
     var endGame = function(draw){
-      // if (draw) {
-      //   alert("Draw");
-      // } else {
-      //   alert(playerTurn.name + " won!");
-      // }
       gameOver = true;
       newBoard();
       turnNumber = 0;
@@ -95,7 +115,6 @@ Player.prototype.placeToken = function(x, y) {
       playerTurn = players[0];
     }
 
-
     if(turnNumber===9 && !gameOver) {
       endGame(true);
       isDraw = true;
@@ -126,6 +145,7 @@ $(document).ready(function() {
     if (typeof playerTurn === "undefined") {
       playerTurn = players[1];
     }
+    aiTurn();
   });
 
   $(".col-xs-4").click(function() {
@@ -134,16 +154,18 @@ $(document).ready(function() {
     var y = parseInt(inputId.slice(2,3));
     if(board[x][y].token==="") {
       $(this).append("<img class='token' src='img/" + playerTurn.token + ".png' alt='Letter'>");
+      var message = playerTurn.name + " wins!";
       if(playerTurn.placeToken(x,y)) {
         if(isDraw) {
           var message = "It's a draw!"
-        } else {
-          var message = playerTurn.name + " wins!";
+          isDraw = false;
         }
         $("p#result").text(message);
+        var start = new Date().getTime();
         $(".col-xs-4").empty();
       }
     }
+    aiTurn();
   });
 });
 
