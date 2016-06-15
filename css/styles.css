@@ -1,0 +1,13 @@
+.board {
+  width: 50%;
+  height: 500px;
+}
+
+.row {
+  height: 33%;
+}
+
+.col-xs-4 {
+  height: 100%;
+  border: 1px solid black;
+}
