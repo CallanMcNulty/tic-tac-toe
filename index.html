@@ -8,34 +8,41 @@
     <title></title>
   </head>
   <body>
+    <div class="text-center page-header">
+      <h1>Tic-Tac-Toe!</h1>
+    </div>
     <form class="player-form">
-      <div class="form-group">
+      <div class="form-group text-center form-inline">
         <label for="#name">Enter your name:</label>
-        <input type="text" id="name">
+        <input class="form-control" type="text" id="name">
+        <select class="form-control" id="token">
+          <option>X</option>
+          <option>O</option>
+        </select>
+        <button type="submit" class="btn btn-warning">Submit</button>
       </div>
-      <select class="form-control" id="token">
-        <option>X</option>
-        <option>O</option>
-      </select>
-      <button type="submit" class="btn">Submit</button>
     </form>
 
     <div class="board">
       <div class="row">
-        <div class="col-xs-4" id="0-0"></div>
-        <div class="col-xs-4" id="1-0"></div>
-        <div class="col-xs-4" id="2-0"></div>
+        <div class="col-xs-4" name="0-0" id="a"></div>
+        <div class="col-xs-4" name="1-0" id="b"></div>
+        <div class="col-xs-4" name="2-0" id="c"></div>
       </div>
       <div class="row">
-        <div class="col-xs-4" id="0-1"></div>
-        <div class="col-xs-4" id="1-1"></div>
-        <div class="col-xs-4" id="2-1"></div>
+        <div class="col-xs-4" name="0-1" id="d"></div>
+        <div class="col-xs-4" name="1-1" id="e"></div>
+        <div class="col-xs-4" name="2-1" id="f"></div>
       </div>
       <div class="row">
-        <div class="col-xs-4" id="0-2"></div>
-        <div class="col-xs-4" id="1-2"></div>
-        <div class="col-xs-4" id="2-2"></div>
+        <div class="col-xs-4" name="0-2" id="g"></div>
+        <div class="col-xs-4" name="1-2" id="h"></div>
+        <div class="col-xs-4" name="2-2" id="i"></div>
       </div>
+    </div>
+
+    <div id="result">
+      <p class="text-center" id="result"></p>
     </div>
   </body>
 </html>

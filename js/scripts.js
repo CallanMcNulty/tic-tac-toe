@@ -37,17 +37,19 @@ function Player(name, token) {
   this.token = token;
 }
 
+var isDraw = false;
+
 Player.prototype.placeToken = function(x, y) {
   var gameOver = false;
   if(board[x][y].token==="") {
     turnNumber ++;
 
     var endGame = function(draw){
-      if (draw) {
-        alert("Draw");
-      } else {
-        alert(playerTurn.name + " won!");
-      }
+      // if (draw) {
+      //   alert("Draw");
+      // } else {
+      //   alert(playerTurn.name + " won!");
+      // }
       gameOver = true;
       newBoard();
       turnNumber = 0;
@@ -93,8 +95,10 @@ Player.prototype.placeToken = function(x, y) {
       playerTurn = players[0];
     }
 
+
     if(turnNumber===9 && !gameOver) {
       endGame(true);
+      isDraw = true;
     }
   }
   return gameOver;
@@ -117,19 +121,27 @@ $(document).ready(function() {
     $("#token").attr('disabled', 'disabled');
     if (players.length === 2) {
       $(".player-form").hide();
+      $(".board").show();
     }
     if (typeof playerTurn === "undefined") {
       playerTurn = players[1];
     }
   });
+
   $(".col-xs-4").click(function() {
-    var inputId = $(this).attr('id');
+    var inputId = $(this).attr('name');
     var x = parseInt(inputId.slice(0,1));
     var y = parseInt(inputId.slice(2,3));
     if(board[x][y].token==="") {
-      $(this).text(playerTurn.token);
+      $(this).append("<img class='token' src='img/" + playerTurn.token + ".png' alt='Letter'>");
       if(playerTurn.placeToken(x,y)) {
-        $(".col-xs-4").text("");
+        if(isDraw) {
+          var message = "It's a draw!"
+        } else {
+          var message = playerTurn.name + " wins!";
+        }
+        $("p#result").text(message);
+        $(".col-xs-4").empty();
       }
     }
   });

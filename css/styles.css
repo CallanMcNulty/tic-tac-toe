@@ -1,6 +1,14 @@
 .board {
-  width: 50%;
-  height: 500px;
+  width: 50em;
+  height: 50em;
+  background-color: black;
+  display: block;
+  margin: auto;
+  display: none;
+}
+
+.form-group {
+  margin-top: 30px;
 }
 
 .row {
@@ -9,5 +17,27 @@
 
 .col-xs-4 {
   height: 100%;
-  border: 1px solid black;
+}
+
+#a, #d, #g, #b, #e, #h {
+  border-right: 3px solid white;
+}
+
+#a, #b, #c, #d, #e, #f {
+border-bottom: 3px solid white;
+}
+
+img[src="img/X.png"] {
+  width: 16em;
+  display: block;
+  margin: auto;
+}
+img[src="img/O.png"] {
+  width: 12em;
+  display: block;
+  margin: auto;
+}
+
+p {
+  font-size: 20px;
 }
