@@ -41,9 +41,14 @@ Player.prototype.placeToken = function(x, y) {
   var gameOver = false;
   if(board[x][y].token==="") {
     turnNumber ++;
-    var endGame = function(){
+
+    var endGame = function(draw){
+      if (draw) {
+        alert("Draw");
+      } else {
+        alert(playerTurn.name + " won!");
+      }
       gameOver = true;
-      alert("Game Over");
       newBoard();
       turnNumber = 0;
     }
@@ -55,9 +60,9 @@ Player.prototype.placeToken = function(x, y) {
       var a = 0;
       if(currentSpace.isSame(currentSpace.getAdjacent(a,b))) {
         if(currentSpace.isSame(currentSpace.getAdjacent(a,-1*b))) {
-          endGame();
+          endGame(false);
         } else if(currentSpace.isSame(currentSpace.getAdjacent(a*2,b*2))) {
-          endGame();
+          endGame(false);
         }
       }
     }
@@ -65,9 +70,9 @@ Player.prototype.placeToken = function(x, y) {
       var b = 0;
       if(currentSpace.isSame(currentSpace.getAdjacent(a,b))) {
         if(currentSpace.isSame(currentSpace.getAdjacent(-1*a,b))) {
-          endGame();
+          endGame(false);
         } else if(currentSpace.isSame(currentSpace.getAdjacent(a*2,b*2))) {
-          endGame();
+          endGame(false);
         }
       }
     }
@@ -75,9 +80,9 @@ Player.prototype.placeToken = function(x, y) {
       for(var b=-1; b<2; b+=2) {
         if(currentSpace.isSame(currentSpace.getAdjacent(a,b))) {
           if(currentSpace.isSame(currentSpace.getAdjacent(-1*a,-1*b))) {
-            endGame();
+            endGame(false);
           } else if(currentSpace.isSame(currentSpace.getAdjacent(a*2,b*2))) {
-            endGame();
+            endGame(false);
           }
         }
       }
@@ -89,8 +94,7 @@ Player.prototype.placeToken = function(x, y) {
     }
 
     if(turnNumber===9 && !gameOver) {
-      alert("Draw");
-      endGame();
+      endGame(true);
     }
   }
   return gameOver;
@@ -102,6 +106,7 @@ $(document).ready(function() {
   $(".player-form").submit(function(event) {
     event.preventDefault();
     var newPlayer = new Player($("input#name").val(), $("#token").val());
+    $("input#name").val("");
     players.push(newPlayer);
     if (newPlayer.token === "X") {
       $("#token").val("O");
@@ -119,9 +124,13 @@ $(document).ready(function() {
   });
   $(".col-xs-4").click(function() {
     var inputId = $(this).attr('id');
-    $(this).text(playerTurn.token);
-    if(playerTurn.placeToken(parseInt(inputId.slice(0,1)),parseInt(inputId.slice(2,3)))) {
-      $(".col-xs-4").text("");
+    var x = parseInt(inputId.slice(0,1));
+    var y = parseInt(inputId.slice(2,3));
+    if(board[x][y].token==="") {
+      $(this).text(playerTurn.token);
+      if(playerTurn.placeToken(x,y)) {
+        $(".col-xs-4").text("");
+      }
     }
   });
 });
