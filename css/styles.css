@@ -41,3 +41,7 @@ img[src="img/O.png"] {
 p {
   font-size: 20px;
 }
+
+#new-game {
+  display: none;
+}
